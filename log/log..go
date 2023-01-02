@@ -37,9 +37,9 @@ func (l *Log) initLogger() {
 			MaxAge:     28, // days
 		})
 		core := zapcore.NewCore(zapcore.NewJSONEncoder(encConfig), w, zap.InfoLevel)
-		l.Logger = zap.New(core)
+		l.Logger = zap.New(core, zap.AddCaller(), zap.AddStacktrace(zapcore.ErrorLevel))
 	} else {
-		l.Logger, err = zap.NewDevelopment()
+		l.Logger, err = zap.NewDevelopment(zap.AddCaller(), zap.AddStacktrace(zapcore.ErrorLevel))
 		if err != nil {
 			panic(err)
 		}

@@ -2,6 +2,8 @@ package main
 
 import (
 	"fibac/config"
+	plaidcfg "fibac/controllers/plaid/config"
+	plaidpkg "fibac/controllers/plaid/http"
 	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	"time"
@@ -21,5 +23,9 @@ func main() {
 			"message": "pong",
 		})
 	})
+
+	cfgPlaid := plaidcfg.New(cfg)
+	ctrlsPlaid := plaidpkg.New(cfgPlaid)
+	ctrlsPlaid.Register(router)
 	_ = router.Run()
 }
